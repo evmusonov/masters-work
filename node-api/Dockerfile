@@ -1,0 +1,15 @@
+FROM node:14
+
+WORKDIR /var/www/swi-vue/project/node-api
+
+COPY package*.json ./
+
+RUN npm install && \
+ npm install -g nodemon -y && \
+ npm install --save express-validator -y \
+ npm install --save mysql \
+ npm install --save mongoose
+
+EXPOSE 8070
+
+CMD ["npm", "run", "dev"]
