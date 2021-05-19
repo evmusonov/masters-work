@@ -1,13 +1,20 @@
 <template>
   <div>
     <Toast />
-    <Menubar :model="items" />
-    <router-view></router-view>
+    <Menubar :model="items">
+      <template #start>
+        <div class="p-mr-2">Обучающая система СГУПС</div>
+      </template>
+      <template #end>
+        <InputText placeholder="Search" type="text" />
+      </template>
+    </Menubar>
+    <i v-if="!isAuth" class="pi pi-spin pi-spinner" style="fontsize: 2rem"></i>
+    <router-view v-if="isAuth"></router-view>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "LayoutDefault",
 
@@ -15,6 +22,10 @@ export default {
     return {
       leftDrawerOpen: false,
       items: [
+        {
+          label: "Главная",
+          to: "/",
+        },
         {
           label: "Регистрация",
           icon: "pi pi-fw pi-user-plus",
@@ -29,12 +40,6 @@ export default {
           to: "/login",
           visible: () => {
             return !this.$store.getters.isAuth;
-          },
-        },
-        {
-          label: "Запрос",
-          command: () => {
-            this.axios.get("/api/users");
           },
         },
         {
@@ -56,7 +61,7 @@ export default {
           ],
         },
         {
-          label: "Админ панель",
+          label: "Панель управления",
           visible: () => {
             return this.$store.getters.getUser.role == 2;
           },
@@ -89,9 +94,13 @@ export default {
       ],
     };
   },
-  methods: {
+  methods: {},
+  computed: {
+    isAuth() {
+      return this.$store.getters.isLogged;
+    },
   },
-  created() {
+  mounted() {
     this.$store.commit({
       type: "setTokenFromStorage",
       tokenType: "accessToken",
@@ -101,13 +110,16 @@ export default {
       tokenType: "refreshToken",
     });
     if (this.$store.getters.isAuth) {
-      this.$store.dispatch('setUserFromDb');
+      this.$store.dispatch("setUserFromDb");
     }
   },
 };
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap");
+
 #app {
+  font-family: "Raleway", sans-serif !important;
 }
 </style>

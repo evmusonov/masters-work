@@ -1,5 +1,5 @@
-const authRoutes = ['UserPage'];
-const unauthRoutes = ['Login', 'Register'];
+const authRoutes = ['user-page'];
+const unauthRoutes = ['login', 'register'];
 
 function isAuth() {
 	if (localStorage.getItem('access_token')) {

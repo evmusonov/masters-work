@@ -7,7 +7,9 @@ const User = new Schema({
   email: { type: String },
   password: { type: String, min: 5 },
   role: { type: Number },
-  refreshToken: { type: String }
+  refreshToken: { type: String },
+  subCourses: [{ type: Schema.Types.ObjectId, ref: "course" }],
+  tests: [{ type: Schema.Types.ObjectId, ref: "coursetest" }],
 });
 
 module.exports = User;

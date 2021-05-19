@@ -1,0 +1,42 @@
+label {
+	display: block;
+}
+
+.guest-form {
+	width: 50%;
+	margin: 50px auto;
+}
+
+.guest-form form {
+	width: 50%;
+	margin: 0 auto;
+}
+
+.guest-form form input {
+	display: block;
+	margin: 10px auto;
+}
+
+.guest-form form input[type="text"] {
+	width: 100%;
+}
+
+.guest-form form input[type="password"] {
+	width: 100%;
+}
+
+.guest-title {
+	margin-bottom: 20px;
+}
+
+.guest-title span {
+	font-size: 20px;
+	text-decoration: underline;
+	color: blue;
+	margin-right: 10px;
+}
+
+.guest-title span:hover {
+	cursor: pointer;
+	text-decoration: none;
+}

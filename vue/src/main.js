@@ -6,18 +6,28 @@ import VueAxios from 'vue-axios'
 import router from './router'
 import PrimeVue from 'primevue/config'
 import Dialog from 'primevue/dialog'
-import 'primevue/resources/themes/saga-blue/theme.css'
+import './assets/theme.css'
+import './assets/custom.css'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 import 'es6-promise/auto'
 import store from './modules/store'
 import securedRoutes from './modules/secured-routes'
 
+import ConfirmationService from 'primevue/confirmationservice'
+import LoadScript from "vue-plugin-load-script"
+
 import Menubar from 'primevue/menubar'
 import InputText from 'primevue/inputtext'
 import ToastService from 'primevue/toastservice'
 import Toast from 'primevue/toast'
 import Button from "primevue/button"
+import Checkbox from 'primevue/checkbox'
+import ConfirmDialog from 'primevue/confirmdialog'
+import TabView from 'primevue/tabview'
+import TabPanel from 'primevue/tabpanel'
+import Dropdown from 'primevue/dropdown'
+import Textarea from 'primevue/textarea'
 
 import 'primeflex/primeflex.css'
 
@@ -40,12 +50,12 @@ createAuthRefreshInterceptor(axios, refreshAuthLogic);
 axios.interceptors.request.use(
   function (config) {
     const result = securedRoutes.filter(function (a) {
-      let result = config.url.match(a);
-      if (result !== null) {
+      let result = config.url.match(a.url);
+      if (result !== null && a.methods.includes(config.method)) {
         return true;
       }
     });
-    //console.log(result);
+    
     if (config.url && result.length) {
       config.headers['Authorization'] = store.getters.getToken('accessToken')
     }
@@ -56,47 +66,31 @@ axios.interceptors.request.use(
   }
 );
 
-// axios.interceptors.response.use(function (response) {
-//   return response;
-// }, function (error) {
-//   if (error.response.status == "401") {
-//     axios.post('/api/check-token', { refreshToken: store.getters.getToken('refreshToken') })
-//       .then((res) => {
-//         if (res.data.accessToken) {
-//           store.commit({
-//             type: 'setToken',
-//             tokenType: 'accessToken',
-//             value: res.data.accessToken
-//           });
-
-//           error.response.config.headers['Authorization'] = res.data.accessToken;
-//           return new Promise((resolve, reject) => {
-//             axios.request(error.response.config).then(response => {
-//               resolve(response);
-//             }).catch((error) => {
-//               reject(error);
-//             })
-//           });
-//         }
-//       });
-//   }
-
-//   return Promise.reject(error);
-// });
-
-
 const app = createApp(App);
 app
   .component('Dialog', Dialog)
   .component('Menubar', Menubar)
   .component('InputText', InputText)
-  .component('Button', Button);
+  .component('Button', Button)
+  .component('Checkbox', Checkbox)
+  .component('ConfirmDialog', ConfirmDialog)
+  .component('TabView', TabView)
+  .component('TabPanel', TabPanel)
+  .component('Dropdown', Dropdown)
+  .component('Textarea', Textarea);
 app
   .use(router)
   .use(VueAxios, axios)
-  .use(PrimeVue)
+  .use(PrimeVue, {
+    locale: {
+        accept: 'Да',
+        reject: 'Нет',
+    }
+})
   .use(store)
   .use(ToastService)
+  .use(ConfirmationService)
+  .use(LoadScript)
 
 app.component('Toast', Toast)
 

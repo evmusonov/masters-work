@@ -1,0 +1,6 @@
+created(1613613236.7477932).
+assert(user_data('$1$vUXiHMJy$Lm.hRA6tApw0kJWJZugoJ/','evmusonov@yandex.ru','123',1)).
+assert(user_data('$1$vUXiHMJy$Lm.hRA6tGeI0kJWJZugoJS','evmusonov@gmail.com','123',1)).
+assert(user_data("e96fa093c846e8aa7f826dc4d58d0e46cc60f3774b4cd525a49d23e0a3c93c4b","asdfe2@yandex.ru","123123",1)).
+assert(user_data("13788a24596b7b0b88323393cd972ccb2283a87800394f9f84f0c2d0c9a5e4fe","","",1)).
+assert(user_data("c500d53576b4e95e3f9a8182d49e24611408450df993af1ca1554c61015dff3e","","",1)).

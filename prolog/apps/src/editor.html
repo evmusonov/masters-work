@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Редактор онтологий</title>
+        <meta name="description" content="">
+        <meta name="author" content="Torbjörn Lager">
+        <!-- CSS -->
+        <link rel="stylesheet" href="/apps/scratchpad/vendor/bootstrap/css_3.2/bootstrap.min.css">
+        <link rel="stylesheet" href="/apps/node_modules/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="/apps/node_modules/codemirror/theme/prolog.css">
+		<link rel="stylesheet" href="/apps/vendor/codemirror-buttons/buttons.css">
+		<link rel="stylesheet" href="/apps/scratchpad/css/editor.css">
+        <link rel="shortcut icon" href="/favicon.ico">
+		<script src="/apps/scratchpad/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+        <header class="navbar navbar-default app">
+            <div class="container pull-left">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img style="position:absolute;top:4px;left:4px;" src="/apps/scratchpad/img/logo.png"></a>
+                    <a href="/" style="margin-left:30px;font-size:20px" class="navbar-brand">
+                        &nbsp;Scratchpad
+                    </a>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="/user">Главная</a>
+                        </li>
+						<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Мои файлы<b class="caret"></b></a>
+                            <ul id="files-menu" class="dropdown-menu">
+                               
+                            </ul>
+                        </li>
+						<li class="dropdown">
+                            <a href="/user/logout">Выйти</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div id="preferences" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 id="myModalLabel">Preferences</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                          <legend>General</legend>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="theme-menu">Theme </label>
+                              <select id="theme-menu" class="input-sm preference-menu">
+                                  <option value="chrome">chrome</option>
+                                  <option value="clouds">clouds</option>
+                                  <option value="dawn">dawn</option>
+                                  <option value="dreamweaver">dreamweaver</option>
+                                  <option value="eclipse">eclipse</option>
+                                  <option value="github">github</option>
+                                  <option selected value="textmate">textmate</option>
+                                  <option value="tomorrow">tomorrow</option>
+                                  <option value="xcode">xcode</option>
+                              </select>
+                          </div>
+                          <legend>Editor</legend>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="font-family-menu">Font family </label>
+                              <select id="font-family-menu" class="input-sm preference-menu">
+                                  <option value="'andale mono',monospace">Andale Mono</option>
+                                  <option value="consolas,monospace">Consolas</option>
+                                  <option selected value="'courier new',monospace">Courier New</option>
+                                  <option value="courier,monospace">Courier</option>
+                                  <option value="monaco,monospace">Monaco</option>
+                                  <option value="menlo,monospace">Menlo</option>
+                                  <option value="'ubuntu mono',monospace">Ubuntu Mono</option>
+                                  <option value="'dejavu',monospace">Dejavu</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="font-size-menu">Font size </label>
+                              <select id="font-size-menu" class="input-sm preference-menu">
+                                  <option value="10">10</option>
+                                  <option value="12">12</option>
+                                  <option selected value="14">14</option>
+                                  <option value="16">16</option>
+                                  <option value="18">18</option>
+                                  <option value="20">20</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="tab-size-menu">Tab size </label>
+                              <select id="tab-size-menu" class="input-sm preference-menu">
+                                  <option value="2">2</option>
+                                  <option selected value="4">4</option>
+                                  <option value="6">6</option>
+                                  <option value="8">8</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="tab-soft-checkbox">Use soft tabs</label>
+                              <input id="tab-soft-checkbox" class="input-sm" checked type="checkbox">
+                          </div>
+                          <div class="form-group">
+                              <label class="col-lg-3 control-label" for="line-wrap-checkbox">Lines</label>
+                              <label class="checkbox-inline"><input id="line-wrap-checkbox" checked type="checkbox" class=""> Wrap</label>
+                              <label class="checkbox-inline"><input id="line-highlight-checkbox" type="checkbox"> Highlight current</label>
+                              <label class="checkbox-inline"><input id="line-numbering-checkbox" checked type="checkbox"> Show numbers</label>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Begin page content -->
+        <div class="container">
+			<div id="file-info"></div>
+			<div><button class="btn btn-danger">Удалить</button></div>
+            <pre id="codemirror"></pre>
+        </div>
+        </div>
+
+		<div class="modal enter-filename" tabindex="-1">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Введите название файла</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <input type="text" id="input-filename" class="form-control">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+		        <button type="button" id="confirm-filename" class="btn btn-primary">Сохранить</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
+        <!-- Placed at the end of the document so the pages load faster -->
+		<script src="/apps/node_modules/viz.js/viz.js"></script>
+		<script src="/apps/node_modules/viz.js/full.render.js"></script>
+        <script src="/apps/scratchpad/vendor/bootstrap/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/apps/scratchpad/js/pengines.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/apps/node_modules/codemirror/lib/codemirror.js"></script>
+		<script src="/apps/node_modules/codemirror/addon/display/panel.js"></script>
+		<script src="/apps/vendor/codemirror-buttons/buttons.js"></script>
+        <script src="/apps/node_modules/codemirror/mode/prolog/prolog.js"></script>
+		<script src="/apps/node_modules/codemirror/mode/prolog/prolog_server.js"></script>
+        <script src="/apps/scratchpad/js/editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://togetherjs.com/togetherjs-min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+.CodeMirror-buttonsPanel button {
+	min-width: 4em;
+	width: auto;
+}
+
+.CodeMirror {
+	height: 70vh !important;
+}
+
+.modal-header {
+	min-height: 16.43px;
+    margin: 15px 15px 15px 15px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-title {
+	float: left;
+}
+
+.modal-backdrop {
+	background-color: rgba(0, 0, 0, 0.4);
+}

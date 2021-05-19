@@ -1,0 +1,3 @@
+created(1615349041.7464721).
+assert(course_data('$1$vUXiHMJy$.FpIAWTt/O8OjFi.01yY10','My first course!','$1$vUXiHMJy$Lm.hRA6tApw0kJWJZugoJ/',0)).
+assert(course_data('$1$vUXiHMJy$2lztEtcmk3hZ1yrmpqOJT.','My first course 1!','$1$vUXiHMJy$Lm.hRA6tApw0kJWJZugoJ/',0)).

@@ -1,69 +1,73 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>{{ info }}</h2>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div class="p-grid">
+    <div class="p-col-12 p-text-center">
+      <h1>Доступные курсы</h1>
+    </div>
+    <div class="p-col-12">
+      <div class="card">
+        <DataView
+          :value="courses"
+          :layout="layout"
+          :paginator="true"
+          :rows="9"
+          :sortOrder="sortOrder"
+          :sortField="sortField"
+        >
+          <template #grid="slotProps">
+            <div style="padding: 0.5em" class="p-col-12 p-md-3 p-text-center">
+              <Button
+                @click="this.$router.push(`/courses/${slotProps.data._id}`)"
+                :label="slotProps.data.name"
+                class="p-button-link"
+              />
+              <small class="p-d-block">{{ slotProps.data.desc }}</small>
+            </div>
+          </template>
+        </DataView>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import DataView from "primevue/dataview";
+
 export default {
-  name: 'Home',
-  props: {
-    msg: String
-  },
+  name: "Home",
+  components: { DataView },
   data() {
     return {
-      info: null
+      courses: [],
+      layout: "grid",
+      sortKey: null,
+      sortOrder: null,
+      sortField: null,
+      sortOptions: [
+        { label: "Price High to Low", value: "!price" },
+        { label: "Price Low to High", value: "price" },
+      ],
     };
   },
-  // mounted() {
-  //   this.axios
-  //     .get('http://localhost:8060/test-api')
-  //     .then(response => (this.info = response.data.status));
-  // }
-}
-</script>
+  methods: {
+    onSortChange(event) {
+      const value = event.value.value;
+      const sortValue = event.value;
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+      if (value.indexOf("!") === 0) {
+        this.sortOrder = -1;
+        this.sortField = value.substring(1, value.length);
+        this.sortKey = sortValue;
+      } else {
+        this.sortOrder = 1;
+        this.sortField = value;
+        this.sortKey = sortValue;
+      }
+    },
+  },
+  mounted() {
+    this.axios
+      .get("/api/courses", { params: { where: { vis: 1, del: 0 } } })
+      .then((response) => (this.courses = response.data));
+  },
+};
+</script>

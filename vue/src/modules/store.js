@@ -6,7 +6,7 @@ const store = createStore({
     return {
       accessToken: '',
       refreshToken: '',
-      user: {}
+      user: {},
     }
   },
   mutations: {
@@ -28,20 +28,28 @@ const store = createStore({
       return state[tokenType]
     },
     isAuth(state) {
-      return state.accessToken !== ''
+      return state['accessToken'] !== '';
     },
     getUser(state) {
       return state.user
     },
+    isLogged(state, getters) {
+      if (getters.isAuth) {
+        return getters.getUser.firstName;
+      } else {
+        return true;
+      }
+    }
   },
   actions: {
-    setUserFromDb ({ commit }) {
-      axios.get("/api/user").then(function(res) {
+    setUserFromDb({ commit }) {
+      return axios.get("/api/user").then(response => {
         commit({
           type: "setUser",
-          user: res.data
+          user: response.data,
         });
-      });
+        return response;
+      })
     }
   }
 })

@@ -1,5 +1,6 @@
 /mongo
 /mysql
-/nginx
+/nginx/access.log
+/nginx/error.log
 /node-api/node_modules
 /vue/node_modules
