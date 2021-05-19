@@ -17,5 +17,6 @@ RUN node --version
 RUN npm --version
 
 RUN npm install
+RUN npm install -g @vue/cli
 
 CMD ["npm", "run", "build"]
