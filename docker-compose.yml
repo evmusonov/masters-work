@@ -4,7 +4,7 @@ services:
     restart: always
     container_name: graduate_nginx
     #image: nginx
-    network_mode: host
+    #network_mode: host
     build: ./vue
     ports:
       - "80:80"
