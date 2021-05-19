@@ -10,6 +10,7 @@ services:
       - "8080:8080"
     volumes:
      - $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+     - $PWD/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
      - $PWD/nginx:/var/log/nginx
      - ./vue:/var/www/swi-vue/project/vue
      - /var/www/swi-vue/project/vue/node_modules
