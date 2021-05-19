@@ -11,7 +11,8 @@ services:
     volumes:
      - $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
      - $PWD/nginx:/var/log/nginx
-     - ./vue:/var/www
+     - ./vue:/var/www/swi-vue/project/vue
+     - /var/www/swi-vue/project/vue/node_modules
 
   # vue:
   #   build: ./vue
