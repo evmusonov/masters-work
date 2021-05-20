@@ -68,10 +68,8 @@ exports.get = async (req, res, next) => {
   if (req.params.uid) {
     if (!where) {
       where = { _id: req.params.uid };
-    } else {
-      where._id = req.params.uid;
     }
-    courses = await Course.findOne({_id: "60963f7d5dfefe00a54cd8d7"});
+    courses = await Course.findById(req.params.uid).where(where);
   } else {
     if (!where) {
       where = { del: 0 };
