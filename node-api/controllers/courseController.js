@@ -69,7 +69,8 @@ exports.get = async (req, res, next) => {
     if (!where) {
       where = { _id: req.params.uid };
     }
-    courses = await Course.findById(req.params.uid).where(where);
+    var ObjectId = mongoose.Types.ObjectId; 
+    courses = await Course.findById(ObjectId(req.params.uid)).where(where);
   } else {
     if (!where) {
       where = { del: 0 };
