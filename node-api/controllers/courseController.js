@@ -71,6 +71,7 @@ exports.get = async (req, res, next) => {
     } else {
       where._id = req.params.uid;
     }
+    return res.json(where);
     courses = await Course.findOne(where).select({
       _id: true,
       name: true,
