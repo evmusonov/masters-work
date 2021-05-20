@@ -386,19 +386,13 @@ parser_subs(Str, S):-
 
 %Стандарный предикат: tokenize_atom("a_b_c d", [a,'_',b,'_',c, d])
 %Модифицированный предикат: tokenize_atom_("a_b_c d", [a_b_c, d])
-tokenize_atom_(Str, TokenList_1):-
-    tokenize_atom(Str, TokenList),
-    t_1(TokenList_,TokenList,[]),
-    t_(TokenList_1,TokenList_,[]).
-
-%Элегантное решение для распознования цепочек типа a_b_c через DCG
+tokenize_atom_(Str, TokenList_):-
+	tokenize_atom(Str, TokenList),
+	t_(TokenList_,TokenList,[]).
+	
+%Элегантное решение через DCG для распознования цепочек типа a_b_c
 %?-t_([a_b_c,d],[a,'_',b,'_',c, d],[])
-t_([A])-->a(A).
+t_([T])-->a(T).
 t_([A|Ts])-->a(A),t_(Ts).
 t_([A_T|Ts])-->a(A),['_'],t_([T|Ts]),{atomic_list_concat([A,'_',T],A_T)}.
-a(A)-->[A],{ not(A='_')}.
-
-t_1([T])-->a1(T).
-t_1([A|Ts])-->a1(A),t_1(Ts).
-a1(A)-->[A],['('],t_(_),[')'],!.   
-a1(A)-->[A].
+a(A)-->[A],{not(A='_')}.
