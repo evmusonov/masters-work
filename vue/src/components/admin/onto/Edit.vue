@@ -94,7 +94,8 @@ export default {
     },
   },
   mounted() {
-    let cmEditor = document.querySelector('.cm-editor');
+    let cmEditor = document.querySelector('#cnl_editor .cm-editor');
+    console.log(cmEditor);
     if (!cmEditor) {
       this.cnlEditor = editorModule(document.getElementById("cnl_editor"));
     }
