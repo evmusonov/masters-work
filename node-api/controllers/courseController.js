@@ -71,7 +71,6 @@ exports.get = async (req, res, next) => {
     } else {
       where._id = req.params.uid;
     }
-    return res.json(where);
     courses = await Course.findOne(where).select({
       _id: true,
       name: true,
@@ -79,7 +78,7 @@ exports.get = async (req, res, next) => {
       onto: true,
       subUsers: true,
       vis: true,
-    }).populate('onto');
+    });
   } else {
     if (!where) {
       where = { del: 0 };
