@@ -94,9 +94,9 @@ export default {
     },
   },
   mounted() {
-    if (this.cnlEditor === null) {
+    let cmEditor = document.querySelector('.cm-editor');
+    if (!cmEditor) {
       this.cnlEditor = editorModule(document.getElementById("cnl_editor"));
-      console.log('www');
     }
     this.axios.get(`/api/ontos/${this.$route.params.uid}`).then((res) => {
       this.form.body = res.data;
