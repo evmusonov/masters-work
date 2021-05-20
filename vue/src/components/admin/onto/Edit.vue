@@ -94,16 +94,17 @@ export default {
     },
   },
   mounted() {
-    let cmEditor = document.querySelector('#cnl_editor .cm-editor');
-    console.log(cmEditor);
+    let cmEditor = document.querySelector("#cnl_editor .cm-editor");
     if (!cmEditor) {
       this.cnlEditor = editorModule(document.getElementById("cnl_editor"));
     }
     this.axios.get(`/api/ontos/${this.$route.params.uid}`).then((res) => {
       this.form.body = res.data;
-      this.cnlEditor.dispatch({
-        changes: { from: 0, insert: res.data.cnl },
-      });
+      if (this.cnlEditor !== null) {
+        this.cnlEditor.dispatch({
+          changes: { from: 0, insert: res.data.cnl },
+        });
+      }
     });
   },
 };
