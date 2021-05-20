@@ -20,7 +20,7 @@ const securedRoutes = [
     methods: ['get', 'post']
   },
   {
-    url: /^\/api\/ontos[\w]*$/,
+    url: /^\/api\/ontos[/]{0,1}[\w]*$/,
     methods: ['get', 'put', 'delete']
   },
   {
