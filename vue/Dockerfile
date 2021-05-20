@@ -22,4 +22,5 @@ RUN npm install -g --unsafe-perm @vue/cli
 EXPOSE 80
 
 #CMD ["npm", "run", "build"]
-CMD ["service", "nginx", "start"]
+#CMD ["service", "nginx", "start"]
+CMD ["nginx", "-g", "daemon off;"]
