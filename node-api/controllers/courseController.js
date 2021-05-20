@@ -68,9 +68,17 @@ exports.get = async (req, res, next) => {
   if (req.params.uid) {
     if (!where) {
       where = { _id: req.params.uid };
+    } else {
+      where._id = req.params.uid;
     }
-    var ObjectId = mongoose.Types.ObjectId; 
-    courses = await Course.findById(ObjectId(req.params.uid)).where(where);
+    courses = await Course.findOne(where).select({
+      _id: true,
+      name: true,
+      desc: true,
+      onto: true,
+      subUsers: true,
+      vis: true,
+    }).populate('onto');
   } else {
     if (!where) {
       where = { del: 0 };
