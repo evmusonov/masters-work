@@ -96,9 +96,7 @@ export default {
   },
   methods: {
     checkDataFilling() {
-      console.log('check');
       if (!this.$store.getters.getUser.firstName) {
-        console.log('in check');
         this.$toast.add({
           severity: "info",
           summary: "Необходимо заполнить профиль для дальнейшей работы",
@@ -113,7 +111,7 @@ export default {
       return this.$store.getters.isLogged;
     },
   },
-mounted() {
+  mounted() {
     this.$store.commit({
       type: "setTokenFromStorage",
       tokenType: "accessToken",
@@ -124,8 +122,14 @@ mounted() {
     });
     if (this.$store.getters.isAuth) {
       this.$store.dispatch("setUserFromDb");
-      this.checkDataFilling();
     }
+  },
+  watch: {
+    $route() {
+      if (this.$store.getters.isAuth) {
+        this.checkDataFilling();
+      }
+    },
   },
 };
 </script>
