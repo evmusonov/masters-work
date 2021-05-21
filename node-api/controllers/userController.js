@@ -35,7 +35,7 @@ exports.registerDataValidation = {
         return new Promise((resolve, reject) => {
           MyModel.findOne({ email: value }, (err, object) => {
             if (object !== null) {
-              reject(new Error(object));
+              reject(new Error(object.email));
             }
 
             resolve(true);
