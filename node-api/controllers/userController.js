@@ -102,8 +102,6 @@ exports.register = async (req, res, next) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  return res.json({message: "huinya"});
-
   bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
     const instance = new UserModel();
     instance.email = req.body.email;
