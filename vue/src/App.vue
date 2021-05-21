@@ -94,13 +94,26 @@ export default {
       ],
     };
   },
-  methods: {},
+  methods: {
+    checkDataFilling() {
+      if (!this.$store.getters.getUser.firstName) {
+        this.$toast.add({
+          severity: "info",
+          summary: "Необходимо заполнить профиль для дальнейшей работы",
+          life: 5000,
+        });
+        this.$router.push("/user/settings");
+      }
+    },
+  },
   computed: {
     isAuth() {
       return this.$store.getters.isLogged;
     },
   },
   mounted() {
+    this.checkDataFilling();
+
     this.$store.commit({
       type: "setTokenFromStorage",
       tokenType: "accessToken",

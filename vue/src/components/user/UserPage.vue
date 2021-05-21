@@ -48,20 +48,9 @@ export default {
   },
   computed: {},
   methods: {
-    checkDataFilling() {
-      if (!this.$store.getters.getUser.firstName) {
-        this.$toast.add({
-          severity: "info",
-          summary: "Необходимо заполнить профиль для дальнейшей работы",
-          life: 5000,
-        });
-        this.$router.push("/user/settings");
-      }
-    },
+    
   },
   mounted() {
-    this.checkDataFilling();
-
     this.axios.get("/api/users/courses").then((res) => {
       this.subCourses = res.data;
     });
