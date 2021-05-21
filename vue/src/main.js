@@ -39,7 +39,6 @@ const refreshAuthLogic = failedRequest => axios.post('/api/check-token', { refre
     value: tokenRefreshResponse.data.accessToken
   });
 
-  localStorage.setItem('token', tokenRefreshResponse.data.accessToken);
   failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.accessToken;
   return Promise.resolve();
 });

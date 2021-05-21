@@ -33,9 +33,9 @@ const store = createStore({
     getUser(state) {
       return state.user
     },
-    isLogged(state, getters) {
+    isLogged: (state, getters) => (route) => {
       if (getters.isAuth) {
-        return getters.getUser.firstName;
+        return getters.getUser.firstName || (!getters.getUser.firstName && route.name == "user-settings");
       } else {
         return true;
       }
