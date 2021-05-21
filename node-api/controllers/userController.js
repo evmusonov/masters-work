@@ -103,7 +103,7 @@ exports.register = async (req, res, next) => {
   }
 
   bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-    const instance = new UserModel();
+    const instance = new MyModel();
     instance.email = req.body.email;
     instance.password = hash;
     instance.role = 1;
