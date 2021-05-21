@@ -126,7 +126,7 @@ export default {
   },
   watch: {
     $route() {
-      if (this.$store.getters.isAuth) {
+      if (this.$store.getters.isAuth && this.$route.name != "user-settings") {
         this.checkDataFilling();
       }
     },
