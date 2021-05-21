@@ -35,7 +35,7 @@ exports.registerDataValidation = {
         return new Promise((resolve, reject) => {
           MyModel.findOne({ email: value }, (err, object) => {
             if (object !== null) {
-              reject(new Error(object.email));
+              reject(new Error('Пользователь с таким email уже существует'));
             }
 
             resolve(true);
