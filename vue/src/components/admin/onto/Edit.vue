@@ -67,7 +67,6 @@ export default {
 
       this.axios.post("/sapi/execsub", { str: this.form.body.cnl }).then(
         (res) => {
-          console.log(res.data);
           this.form.body.sub_list = res.data;
 
           this.axios
