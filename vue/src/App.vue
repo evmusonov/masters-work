@@ -96,7 +96,9 @@ export default {
   },
   methods: {
     checkDataFilling() {
+      console.log('check');
       if (!this.$store.getters.getUser.firstName) {
+        console.log('in check');
         this.$toast.add({
           severity: "info",
           summary: "Необходимо заполнить профиль для дальнейшей работы",
