@@ -4,7 +4,7 @@ const securedRoutes = [
     methods: ['get']
   },
   {
-    url: /^\/api\/user$/i,
+    url: /^\/api\/user[/]{0,1}[\w]*$/i,
     methods: ['get', 'put']
   },
   {
