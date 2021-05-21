@@ -111,9 +111,7 @@ export default {
       return this.$store.getters.isLogged;
     },
   },
-  mounted() {
-    this.checkDataFilling();
-
+mounted() {
     this.$store.commit({
       type: "setTokenFromStorage",
       tokenType: "accessToken",
@@ -124,6 +122,7 @@ export default {
     });
     if (this.$store.getters.isAuth) {
       this.$store.dispatch("setUserFromDb");
+      this.checkDataFilling();
     }
   },
 };

@@ -35,6 +35,8 @@ const store = createStore({
     },
     isLogged(state, getters) {
       if (getters.isAuth) {
+        return getters.getUser.firstName;
+      } else {
         return true;
       }
     }
