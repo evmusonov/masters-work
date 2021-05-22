@@ -1,9 +1,6 @@
 /*
 Viz.js 2.1.2 (Graphviz 2.40.1, Expat 2.2.5, Emscripten 1.37.36)
 */
-let exportModule = null;
-let exportRender = null;
-
 (function(global) {
 var Module = function(Module) {
   Module = Module || {};
@@ -90,9 +87,4 @@ if (typeof global.Viz !== 'undefined') {
   global.Viz.Module = Module;
 }
 
-exportModule = Module;
-exportRender = render;
-
 })(typeof self !== 'undefined' ? self : this);
-
-export {exportModule, exportRender};
