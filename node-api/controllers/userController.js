@@ -107,7 +107,9 @@ exports.register = async (req, res, next) => {
     instance.email = req.body.email;
     instance.password = hash;
     instance.role = 1;
-    instance.refreshToken = crypto.createHash('sha256').digest('base64');
+    var current_date = (new Date()).valueOf().toString();
+    var random = Math.random().toString();
+    instance.refreshToken = crypto.createHash('sha256').update(current_date + random).digest('base64');
     instance.save();
     return res.json(instance);
   });
