@@ -91,7 +91,7 @@ export default {
         .get("/api/ontos", { params: { where: { vis: 1, del: 0 } } })
         .then((res) => {
           this.ontos = res.data;
-          this.selectedOnto = this.form.body.onto;
+          this.selectedOnto = this.ontos.find(x => x._id === this.form.body.onto._id);
         });
     });
   },
