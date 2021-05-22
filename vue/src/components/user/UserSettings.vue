@@ -9,7 +9,7 @@
           <div class="p-field">
             <label for="firstname">Имя</label>
             <InputText
-              v-model="this.$store.getters.getUser.firstName"
+              v-model="this.form.body.firstName"
               id="firstname"
               type="text"
             />
@@ -18,7 +18,7 @@
           <div class="p-field">
             <label for="surname">Фамилия</label>
             <InputText
-              v-model="this.$store.getters.getUser.surName"
+              v-model="this.form.body.surName"
               id="surname"
               type="text"
             />
@@ -51,8 +51,8 @@ export default {
       );
     },
     save() {
-      this.form.body.firstName = this.$store.getters.getUser.firstName;
-      this.form.body.surName = this.$store.getters.getUser.surName;
+      // this.form.body.firstName = this.$store.getters.getUser.firstName;
+      // this.form.body.surName = this.$store.getters.getUser.surName;
       this.axios
         .put("/api/user/" + this.$store.getters.getUser._id, this.form.body)
         .then(
@@ -70,6 +70,9 @@ export default {
           }
         );
     },
+  },
+  mounted() {
+    this.form.body = this.$store.getters.getUser;
   },
 };
 </script>

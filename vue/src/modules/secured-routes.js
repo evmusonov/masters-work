@@ -12,7 +12,7 @@ const securedRoutes = [
     methods: ['get', 'post']
   },
   {
-    url: /^\/api\/courses[\w]*$/,
+    url: /^\/api\/courses[/]{0,1}[\w]*$/,
     methods: ['get', 'put', 'delete']
   },
   {

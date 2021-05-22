@@ -21,6 +21,7 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
+      userLoaded: false,
       items: [
         {
           label: "Главная",
@@ -110,6 +111,9 @@ export default {
     isAuth() {
       return this.$store.getters.isLogged;
     },
+    isUserLoaded() {
+      return this.userLoaded;
+    },
   },
   mounted() {
     this.$store.commit({
@@ -121,12 +125,16 @@ export default {
       tokenType: "refreshToken",
     });
     if (this.$store.getters.isAuth) {
-      this.$store.dispatch("setUserFromDb");
+      this.$store.dispatch("setUserFromDb").then(() => this.userLoaded = true);
     }
   },
   watch: {
     $route() {
-      if (this.$store.getters.isAuth && this.$route.name != "user-settings") {
+      if (
+        this.isUserLoaded &&
+        this.$store.getters.isAuth &&
+        this.$route.name != "user-settings"
+      ) {
         this.checkDataFilling();
       }
     },
