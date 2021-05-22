@@ -4,6 +4,9 @@ module.exports = {
     quasar: {
       importStrategy: 'kebab',
       rtlSupport: false
+    },
+    webpackBundleAnalyzer: {
+      openAnalyzer: false
     }
   },
   transpileDependencies: [
