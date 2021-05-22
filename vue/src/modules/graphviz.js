@@ -1,5 +1,5 @@
 import $ from "jquery";
-import Viz from './vizjs/viz.js';
+import Viz from './vizjs/viz.es';
 //import { SVG } from '@svgdotjs/svg.js';
 
 class Pengine {
