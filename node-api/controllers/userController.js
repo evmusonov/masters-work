@@ -181,8 +181,18 @@ exports.getUser = async (req, res, next) => {
 
 exports.putUser = async (req, res, next) => {
   if (req.params.user) {
-    const user = await MyModel.updateOne({ _id: req.params.user }, req.body);
+    const decoded = jwt.verify(req.headers.authorization, config.jwt.secret);
+    const userEmail = decoded.data;
 
+    const user = await MyModel.findOne({ _id: req.params.user, email: userEmail });
+    if (user === null) {
+      const anotherUser = await MyModel.findOne({ email: userEmail, role: 2 });
+      if (anotherUser !== null) {
+        await MyModel.updateOne({ _id: req.params.user }, req.body);
+      }
+    } else {
+      await MyModel.updateOne({ _id: req.params.user }, req.body);
+    }
     res.json(user);
   }
 

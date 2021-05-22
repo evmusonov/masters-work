@@ -7,7 +7,7 @@
       <div class="p-card p-p-2">
         <div class="p-fluid">
           <div class="p-field">
-            <label for="name">Имя</label>
+            <label for="firstName">Имя</label>
             <InputText
               v-model="form.body.firstName"
               id="firstName"
@@ -16,12 +16,12 @@
             <small class="p-error">{{ form.errors.firstName }}</small>
           </div>
           <div class="p-field">
-            <label for="desc">Фамилия</label>
+            <label for="firstName">Фамилия</label>
             <InputText v-model="form.body.surName" id="firstName" type="text" />
             <small class="p-error">{{ form.errors.surName }}</small>
           </div>
           <div class="p-field">
-            <label for="desc">Email</label>
+            <label for="email">Email</label>
             <InputText v-model="form.body.email" id="email" type="text" />
             <small class="p-error">{{ form.errors.email }}</small>
           </div>
@@ -58,10 +58,9 @@ export default {
       ],
       form: {
         body: {
-          name: "",
-          desc: "",
-          vis: false,
-          onto_uid: null,
+          firstName: "",
+          surName: "",
+          email: "",
         },
         errors: {},
       },
@@ -76,16 +75,16 @@ export default {
     },
     edit() {
       this.axios
-        .put(`/api/courses/${this.$route.params.uid}`, this.form.body)
+        .put(`/api/user/${this.$route.params.uid}`, this.form.body)
         .then(
           () => {
             this.form.errors = {};
             this.$toast.add({
               severity: "success",
-              summary: "Курс изменен",
+              summary: "Пользователь изменен",
               life: 3000,
             });
-            this.$router.push("/admin/courses");
+            this.$router.push("/admin/users");
           },
           (error) => {
             this.errors(error.response.data);
