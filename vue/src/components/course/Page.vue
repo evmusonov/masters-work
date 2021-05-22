@@ -43,6 +43,7 @@
         />
       </div>
       <div id="result"></div>
+      <div id="new"></div>
     </div>
   </div>
 </template>
@@ -51,6 +52,7 @@
 //import Pengine from "./../../modules/pengines";
 import Pengine from "../../modules/graphviz";
 import ProgressSpinner from "primevue/progressspinner";
+import { graphviz }  from 'd3-graphviz';
 
 export default {
   components: { ProgressSpinner },
@@ -105,6 +107,7 @@ export default {
     },
   },
   mounted() {
+    graphviz('#new').renderDot('digraph {a -> b}');
     this.axios
       .get("/api/courses/" + this.$route.params.uid, {
         params: { where: { vis: 1, del: 0 } },
