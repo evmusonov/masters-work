@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('./../config/config');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const { resolve } = require('path');
+//const { resolve } = require('path');
 const saltRounds = 10;
 
 const FavModel = require('./../models/usersFavCourseModel');
@@ -13,11 +13,11 @@ const Fav = mongoose.model('users_fav_course', FavModel);
 const User = require('./../models/userModel');
 const MyModel = mongoose.model('user', User);
 
-const CourseModel = require('../models/courseModel');
+const CourseModel = require('./../models/courseModel');
 const Course = mongoose.model('course', CourseModel);
 
-const CourseTestModel = require('../models/courseTestModel');
-const CourseTest = mongoose.model('coursetest', CourseTestModel);
+const CourseTestModel = require('./../models/courseTestModel');
+//const CourseTest = mongoose.model('coursetest', CourseTestModel);
 
 exports.registerDataValidation = {
   email: {
@@ -334,7 +334,6 @@ exports.delCourse = async (req, res, next) => {
 }
 
 exports.getCourses = async (req, res, next) => {
-  return res.json({message: 'hello'});
   const userToken = jwt.verify(req.headers.authorization, config.jwt.secret);
   const user = await MyModel
     .findOne({ email: userToken.data })
