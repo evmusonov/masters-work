@@ -174,27 +174,43 @@ export default {
     },
   },
   mounted() {
-    window.addEventListener("scroll", this.updateScroll);
-    this.axios
-      .get("/api/courses/" + this.$route.params.uid, {
-        params: { where: { vis: 1, del: 0 } },
+    this.$loadScript("/node_modules/viz.js/viz.js")
+      .then(() => {
+        this.$loadScript("/node_modules/viz.js/full.render.js")
+          .then(() => {
+            window.addEventListener("scroll", this.updateScroll);
+            this.axios
+              .get("/api/courses/" + this.$route.params.uid, {
+                params: { where: { vis: 1, del: 0 } },
+              })
+              .then((response) => {
+                this.course = response.data;
+
+                let checkTests = this.$store.getters.getUser.tests.find(
+                  (element) => {
+                    return element.course == this.$route.params.uid;
+                  }
+                );
+                if (checkTests !== undefined) {
+                  this.$router.push(
+                    `/courses/${this.$route.params.uid}/tests/${checkTests._id}`
+                  );
+                }
+
+                this.pengine = new Pengine();
+                this.pengine.executeBinds();
+
+                this.renderGraph(
+                  this.course.onto.sub_list[this.selectedSubIndex].name
+                );
+              });
+          })
+          .catch(() => {
+            // Failed to fetch script
+          });
       })
-      .then((response) => {
-        this.course = response.data;
-
-        let checkTests = this.$store.getters.getUser.tests.find((element) => {
-          return element.course == this.$route.params.uid;
-        });
-        if (checkTests !== undefined) {
-          this.$router.push(
-            `/courses/${this.$route.params.uid}/tests/${checkTests._id}`
-          );
-        }
-
-        this.pengine = new Pengine();
-        this.pengine.executeBinds();
-
-        this.renderGraph(this.course.onto.sub_list[this.selectedSubIndex].name);
+      .catch(() => {
+        // Failed to fetch script
       });
   },
   watch: {

@@ -38,32 +38,48 @@ export default {
   },
   methods: {},
   mounted() {
-    this.axios
-      .get("/api/courses/" + this.$route.params.uid, {
-        params: { where: { vis: 1, del: 0 } },
-      })
-      .then((response) => {
-        this.course = response.data;
-
-        this.axios.post("/sapi/exec", { str: this.course.onto.cnl }).then(
-          (res) => {
-            this.pengine = new Pengine();
-            this.pengine.executeBinds();
-            this.pengine.render(res.data);
-            this.loading = true;
-
+    this.$loadScript("/node_modules/viz.js/viz.js")
+      .then(() => {
+        this.$loadScript("/node_modules/viz.js/full.render.js")
+          .then(() => {
             this.axios
-              .get(`/api/users/courses/${this.$route.params.uid}/tests`)
-              .then((res) => {
-                this.test = res.data;
-                this.progress = new GraphProgress();
-                this.progress.check(this.test.answers);
+              .get("/api/courses/" + this.$route.params.uid, {
+                params: { where: { vis: 1, del: 0 } },
+              })
+              .then((response) => {
+                this.course = response.data;
+
+                this.axios
+                  .post("/sapi/exec", { str: this.course.onto.cnl })
+                  .then(
+                    (res) => {
+                      this.pengine = new Pengine();
+                      this.pengine.executeBinds();
+                      this.pengine.render(res.data);
+                      this.loading = true;
+
+                      this.axios
+                        .get(
+                          `/api/users/courses/${this.$route.params.uid}/tests`
+                        )
+                        .then((res) => {
+                          this.test = res.data;
+                          this.progress = new GraphProgress();
+                          this.progress.check(this.test.answers);
+                        });
+                    },
+                    (error) => {
+                      console.log(error.response);
+                    }
+                  );
               });
-          },
-          (error) => {
-            console.log(error.response);
-          }
-        );
+          })
+          .catch(() => {
+            // Failed to fetch script
+          });
+      })
+      .catch(() => {
+        // Failed to fetch script
       });
   },
 };

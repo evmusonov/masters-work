@@ -103,16 +103,28 @@ export default {
     },
   },
   mounted() {
-    this.axios
-      .get(
-        `/api/users/courses/${this.$route.params.course}/tests`
-      )
-      .then((response) => {
-        this.test = response.data;
-        this.pengine = new Pengine();
-        this.pengine.executeBinds();
+    this.$loadScript("/node_modules/viz.js/viz.js")
+      .then(() => {
+        this.$loadScript("/node_modules/viz.js/full.render.js")
+          .then(() => {
+            this.axios
+              .get(`/api/users/courses/${this.$route.params.course}/tests`)
+              .then((response) => {
+                this.test = response.data;
+                this.pengine = new Pengine();
+                this.pengine.executeBinds();
 
-        this.renderGraph(this.test.sub_list[this.selectedFrameIndex].name);
+                this.renderGraph(
+                  this.test.sub_list[this.selectedFrameIndex].name
+                );
+              });
+          })
+          .catch(() => {
+            // Failed to fetch script
+          });
+      })
+      .catch(() => {
+        // Failed to fetch script
       });
   },
 };
