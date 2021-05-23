@@ -109,7 +109,7 @@ export default {
   },
   computed: {
     isAuth() {
-      return this.$store.getters.isLogged;
+      return this.$store.getters.isLogged && this.userLoaded;
     },
     isUserLoaded() {
       return this.userLoaded;
