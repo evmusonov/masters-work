@@ -7,6 +7,7 @@ const store = createStore({
       accessToken: '',
       refreshToken: '',
       user: {},
+      userLoaded: false,
     }
   },
   mutations: {
@@ -20,7 +21,8 @@ const store = createStore({
       }
     },
     setUser(state, payload) {
-      state.user = payload.user
+      state.user = payload.user;
+      state.userLoaded = true;
     },
   },
   getters: {
@@ -33,9 +35,12 @@ const store = createStore({
     getUser(state) {
       return state.user
     },
-    isLogged: (state, getters) => (route) => {
+    getUserLoadingStatus(state) {
+      return state.userLoaded;
+    },
+    isLogged: (state, getters) => {
       if (getters.isAuth) {
-        return getters.getUser.firstName || (!getters.getUser.firstName && route.name == "user-settings");
+        return getters.getUserLoadingStatus;
       } else {
         return true;
       }
