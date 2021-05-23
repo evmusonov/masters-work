@@ -109,10 +109,7 @@ export default {
   },
   computed: {
     isAuth() {
-      return (
-        this.$store.getters.isLogged ||
-        (this.$store.getters.isLogged && this.userLoaded)
-      );
+      return this.$store.getters.isLogged;
     },
     isUserLoaded() {
       return this.userLoaded;
@@ -128,9 +125,7 @@ export default {
       tokenType: "refreshToken",
     });
     if (this.$store.getters.isAuth) {
-      this.$store
-        .dispatch("setUserFromDb")
-        .then(() => (this.userLoaded = true));
+      this.$store.dispatch("setUserFromDb").then(() => this.userLoaded = true);
     }
   },
   watch: {

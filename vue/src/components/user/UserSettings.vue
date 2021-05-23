@@ -3,7 +3,7 @@
     <div class="p-col-12 p-text-center">
       <h1>Настройки</h1>
     </div>
-    <div class="p-col-8 p-offset-2">
+    <div class="p-col-8 p-offset-2" v-if="this.$store.getters.getUser">
       <div class="p-card p-p-2">
         <div class="p-fluid">
           <div class="p-field">
