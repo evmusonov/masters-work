@@ -72,6 +72,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$store.getters.getUser);
     this.form.body = this.$store.getters.getUser;
   },
 };
