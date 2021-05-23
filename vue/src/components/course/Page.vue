@@ -52,7 +52,7 @@
 //import Pengine from "./../../modules/pengines";
 import Pengine from "../../modules/graphviz";
 import ProgressSpinner from "primevue/progressspinner";
-import { graphviz }  from 'd3-graphviz';
+//import { graphviz }  from 'd3-graphviz';
 
 export default {
   components: { ProgressSpinner },
@@ -107,33 +107,47 @@ export default {
     },
   },
   mounted() {
-    graphviz('#new').renderDot('digraph {a -> b}');
-    this.axios
-      .get("/api/courses/" + this.$route.params.uid, {
-        params: { where: { vis: 1, del: 0 } },
-      })
-      .then((response) => {
-        this.course = response.data;
-        this.checkUserSubscription();
+    //graphviz('#new').renderDot('digraph {a -> b}');
+    this.$loadScript("/node_modules/viz.js/full.render.js")
+      .then(() => {
+        this.$loadScript("/node_modules/viz.js/viz.js")
+          .then(() => {
+            this.axios
+              .get("/api/courses/" + this.$route.params.uid, {
+                params: { where: { vis: 1, del: 0 } },
+              })
+              .then((response) => {
+                this.course = response.data;
+                this.checkUserSubscription();
 
-        this.axios.post("/sapi/exec", { str: this.course.onto.cnl }).then(
-          (res) => {
-            this.pengine = new Pengine();
-            this.pengine.executeBinds();
+                this.axios
+                  .post("/sapi/exec", { str: this.course.onto.cnl })
+                  .then(
+                    (res) => {
+                      this.pengine = new Pengine();
+                      this.pengine.executeBinds();
 
-            this.pengine.render(res.data);
-            this.loading = true;
-          },
-          (error) => {
-            console.log(error.response);
-          }
-        );
+                      this.pengine.render(res.data);
+                      this.loading = true;
+                    },
+                    (error) => {
+                      console.log(error.response);
+                    }
+                  );
 
-        this.axios
-          .get("/api/users/favs/courses/" + this.$route.params.uid)
-          .then((res) => {
-            this.favCourse = res.data.fav;
+                this.axios
+                  .get("/api/users/favs/courses/" + this.$route.params.uid)
+                  .then((res) => {
+                    this.favCourse = res.data.fav;
+                  });
+              });
+          })
+          .catch(() => {
+            // Failed to fetch script
           });
+      })
+      .catch(() => {
+        // Failed to fetch script
       });
   },
 };

@@ -1,5 +1,6 @@
 import $ from "jquery";
-import Viz from 'viz.js';
+//import Viz from './vizjs/viz.es';
+//import workerURL from './vizjs/full.render';
 //import { SVG } from '@svgdotjs/svg.js';
 
 class Pengine {
@@ -18,7 +19,7 @@ class Pengine {
     if (typeof answer === "string") {
       $('#result').html(answer);
     } else {
-      let viz = new Viz();
+      let viz = new Viz(); // eslint-disable-line
       return viz.renderSVGElement(answer.args[0])
         .then((element) => {
           $('#result').find('svg').remove();
@@ -104,7 +105,7 @@ class Pengine {
         })
         .catch(error => {
           // Create a new Viz instance (@see Caveats page for more info)
-          viz = new Viz();
+          viz = new Viz(); // eslint-disable-line
 
           // Possibly display the error
           console.error(error);
