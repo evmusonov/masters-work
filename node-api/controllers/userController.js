@@ -334,8 +334,8 @@ exports.delCourse = async (req, res, next) => {
 }
 
 exports.getCourses = async (req, res, next) => {
+  return res.json({message: 'hello'});
   const userToken = jwt.verify(req.headers.authorization, config.jwt.secret);
-  return res.json(userToken);
   const user = await MyModel
     .findOne({ email: userToken.data })
     .populate('subCourses', 'name desc');
