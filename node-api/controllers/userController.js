@@ -10,11 +10,11 @@ const saltRounds = 10;
 const FavModel = require('./../models/usersFavCourseModel');
 const Fav = mongoose.model('users_fav_course', FavModel);
 
-const User = require('./../models/userModel');
-const MyModel = mongoose.model('user', User);
-
 const CourseModel = require('./../models/courseModel');
 const Course = mongoose.model('course', CourseModel);
+
+const User = require('./../models/userModel');
+const MyModel = mongoose.model('user', User);
 
 const CourseTestModel = require('./../models/courseTestModel');
 const CourseTest = mongoose.model('coursetest', CourseTestModel);
