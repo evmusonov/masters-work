@@ -65,12 +65,6 @@ router.get(
   protected,
   userController.getUser,
 );
-router.get(
-  '/users(/:uid)?',
-  'get-all-users',
-  protected,
-  userController.getAllUsers,
-);
 router.put(
   '/user/:user',
   'put-user',
@@ -187,11 +181,6 @@ router.get(
   protected,
   userController.getCourses,
 );
-router.get(
-  '/users/courses-new',
-  'get-user-new-courses',
-  userController.getNewCourses,
-);
 
 // COURSE TESTS
 router.post(
@@ -214,6 +203,13 @@ router.put(
   protected,
   //checkSchema(courseTestController.getDataValidation),
   courseTestController.putAnswer,
+);
+
+router.get(
+  '/users(/:uid)?',
+  'get-all-users',
+  protected,
+  userController.getAllUsers,
 );
 
 module.exports = router

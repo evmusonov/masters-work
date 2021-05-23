@@ -334,22 +334,9 @@ exports.delCourse = async (req, res, next) => {
 }
 
 exports.getCourses = async (req, res, next) => {
-  return res.json({});
-  // const userToken = jwt.verify(req.headers.authorization, config.jwt.secret);
-  // const user = await MyModel
-  //   .findOne({ email: userToken.data })
-  //   .populate('subCourses', 'name desc');
-  // if (user === null) {
-  //   return res.status(404).json({ message: "Can't find the user" });
-  // }
-
-  // return res.json(user);
-}
-
-exports.getNewCourses = async (req, res, next) => {
-  //const userToken = jwt.verify(req.headers.authorization, config.jwt.secret);
+  const userToken = jwt.verify(req.headers.authorization, config.jwt.secret);
   const user = await MyModel
-    .findOne({ email: 'evmusonov@yandex.ru' })
+    .findOne({ email: userToken.data })
     .populate('subCourses', 'name desc');
   if (user === null) {
     return res.status(404).json({ message: "Can't find the user" });
