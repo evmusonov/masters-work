@@ -16,7 +16,7 @@ const MyModel = mongoose.model('user', User);
 const CourseModel = require('./../models/courseModel');
 const Course = mongoose.model('course', CourseModel);
 
-const CourseTestModel = require('./../models/courseTestModel');
+//const CourseTestModel = require('./../models/courseTestModel');
 //const CourseTest = mongoose.model('coursetest', CourseTestModel);
 
 exports.registerDataValidation = {
