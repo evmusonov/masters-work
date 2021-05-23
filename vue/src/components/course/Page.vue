@@ -108,9 +108,9 @@ export default {
   },
   mounted() {
     //graphviz('#new').renderDot('digraph {a -> b}');
-    this.$loadScript("/node_modules/viz.js/full.render.js")
+    this.$loadScript("/node_modules/viz.js/viz.js")
       .then(() => {
-        this.$loadScript("/node_modules/viz.js/viz.js")
+        this.$loadScript("/node_modules/viz.js/full.render.js")
           .then(() => {
             this.axios
               .get("/api/courses/" + this.$route.params.uid, {
