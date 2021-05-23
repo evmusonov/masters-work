@@ -187,6 +187,11 @@ router.get(
   protected,
   userController.getCourses,
 );
+router.get(
+  '/users/courses-new',
+  'get-user-new-courses',
+  userController.getNewCourses,
+);
 
 // COURSE TESTS
 router.post(
