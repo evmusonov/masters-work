@@ -285,6 +285,9 @@ exports.addCourse = async (req, res, next) => {
   }
 
   const userToken = jwt.verify(req.headers.authorization, config.jwt.secret);
+  if (!mongoose.Types.ObjectId.isValid(req.params.uid)) {
+    return res.status(400).json({ message: "Uid is not an ObjectId" });
+  }
   const user = await MyModel.findOneAndUpdate(
     { email: userToken.data },
     { $push: { subCourses: req.params.uid } },
