@@ -3,10 +3,7 @@
     <div class="p-col-12 p-text-center">
       <h1>Настройки</h1>
     </div>
-    <div
-      class="p-col-8 p-offset-2"
-      v-if="isLoaded"
-    >
+    <div class="p-col-8 p-offset-2">
       <div class="p-card p-p-2">
         <div class="p-fluid">
           <div class="p-field">
@@ -74,15 +71,8 @@ export default {
         );
     },
   },
-  computed: {
-    isLoaded() {
-      return this.$store.getters.getUser.firstName;
-    },
-  },
   mounted() {
-    if (this.isLoaded) {
-      this.form.body = this.$store.getters.getUser;
-    }
+    this.form.body = this.$store.getters.getUser;
   },
 };
 </script>
