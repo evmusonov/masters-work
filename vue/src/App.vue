@@ -125,7 +125,10 @@ export default {
       tokenType: "refreshToken",
     });
     if (this.$store.getters.isAuth) {
-      this.$store.dispatch("setUserFromDb").then(() => this.userLoaded = true);
+      this.$store.dispatch("setUserFromDb").then(() => {
+        console.log("loaded");
+        this.userLoaded = true;
+      });
     }
   },
   watch: {
