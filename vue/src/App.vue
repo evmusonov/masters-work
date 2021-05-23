@@ -21,7 +21,6 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
-      userLoaded: false,
       items: [
         {
           label: "Главная",
@@ -111,9 +110,6 @@ export default {
     isAuth() {
       return this.$store.getters.isLogged;
     },
-    isUserLoaded() {
-      return this.userLoaded;
-    },
   },
   mounted() {
     this.$store.commit({
@@ -131,7 +127,7 @@ export default {
   watch: {
     $route() {
       if (
-        this.isUserLoaded &&
+        this.$store.getters.getUserLoadingStatus &&
         this.$store.getters.isAuth &&
         this.$route.name != "user-settings"
       ) {
