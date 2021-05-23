@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('./../config/config');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-//const { resolve } = require('path');
+const { resolve } = require('path');
 const saltRounds = 10;
 
 const FavModel = require('./../models/usersFavCourseModel');
