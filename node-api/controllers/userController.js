@@ -342,5 +342,5 @@ exports.getCourses = async (req, res, next) => {
     return res.status(404).json({ message: "Can't find the user" });
   }
 
-  return res.json(user);
+  return res.json(user.subCourses);
 }
