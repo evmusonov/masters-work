@@ -3,8 +3,6 @@ services:
   nginx:
     restart: always
     container_name: graduate_nginx
-    #image: nginx
-    #network_mode: host
     build: ./vue
     ports:
       - "80:80"
@@ -14,16 +12,6 @@ services:
      - $PWD/nginx:/var/log/nginx
      - ./vue:/var/www/swi-vue/project/vue
      - /var/www/swi-vue/project/vue/node_modules
-
-  # vue:
-  #   build: ./vue
-  #   restart: always
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./vue:/var/www/swi-vue/project/vue
-  #     - /var/www/swi-vue/project/vue/node_modules
-
   node:
     build: ./node-api
     restart: always
@@ -39,24 +27,6 @@ services:
       - "8060:8060"
     volumes:
       - ./prolog:/var/www/swi-vue/project/swipl
-  # mysql:
-  #   image: mysql:8
-  #   ports:
-  #    - "3306:3306"
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-  #     MYSQL_DATABASE:      intes
-  #     MYSQL_USER:          admin
-  #     MYSQL_PASSWORD:      admin
-  #   volumes:
-  #    - ./mysql:/var/lib/mysql
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   ports:
-  #    - "8090:80"
-  #   environment:
-  #     PMA_HOST: mysql
-  #     PMA_PORT: 3306
   mongo:
     image: mongo
     restart: always
@@ -76,7 +46,3 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
-
-networks:
-  backend:
-    driver: "bridge"
