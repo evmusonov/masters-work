@@ -54,8 +54,6 @@ user:file_search_path(apps, app(apps)).
 :- http_handler(sapi(execsub), exec_sub_controller, []).
 :- http_handler(sapi(execcourse), exec_course_controller, []).
 
-:- initialization db_users:attach_db('db/users').
-
 exec_controller(Request) :-
 	http_read_json_dict(Request, JSONDict), !,
 	graph:parser(JSONDict.get(str)),graph:graf(_,_,_,G),
