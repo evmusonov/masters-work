@@ -50,8 +50,6 @@ user:file_search_path(css_path, './css').
 user:file_search_path(apps, app(apps)).
 
 :- http_handler(apps(.), serve_files_in_directory(apps), [prefix]).
-:- http_handler(root(.), index_controller, []).
-:- http_handler(root('test-api'), test_api, []).
 :- http_handler(js(Filename), http_reply_file(js_path(Filename), []), []).
 :- http_handler(css(Filename), http_reply_file(css_path(Filename), []), []).
 
@@ -79,59 +77,6 @@ exec_sub_controller(Request) :-
 	http_read_json_dict(Request, JSONDict), !,
 	graph:parser_subs(JSONDict.get(str), S),
 	reply_json(S).
-
-index_controller(Request) :-
-	user_module:check_session(Request),
-	( http_session_data(Message, enter_message)
-	-> http_session_retract(Message, enter_message),
-	   MessageClass = 'alert alert-warning'
-	;  Message = '', MessageClass = ''
-	),
-    reply_html_page(
-	   [
-	   	title('Howdy'),
-	   	\['<link rel="stylesheet" href="/apps/src/vendor/bootstrap/css/bootstrap.min.css">'],
-	   	\html_requires(css('styles.css')),
-	   	\['<script src="/apps/js/require.min.js"></script>',
-	   	'<script src="/apps/js/lib/scripts.js"></script>']
-		%\html_requires([js('require.min.js'), js('lib/scripts.js')])
-	   ],
-	   [
-		div([class='guest-form'], [
-			div([class=MessageClass, role='alert'], Message),
-			div(class='guest-title', [
-				span([class='reg-title'], 'Регистрация'),
-				span([class='auth-title'], 'Авторизация')
-			]),
-			form([class='register-form', method=post, action=location_by_id(register_handler)], [
-				label(for=email_input, [
-					\['E-mail'],
-					input([id=email_input, type=text, name=email])
-				]),
-				label(for=pass_input, [
-					\['Пароль'],
-					input([id=pass_input, type=password, name=password])
-				]),
-				input([type=submit, value='Отправить'])
-			]),
-			form([class='auth-form', method=post, action=location_by_id(login_handler)], [
-				label(for=email_input, [
-					\['E-mail'],
-					input([id=email_input, type=text, name=email])
-				]),
-				label(for=pass_input, [
-					\['Пароль'],
-					input([id=pass_input, type=password, name=password])
-				]),
-				input([type=submit, value='Войти'])
-			])
-		])
-	   ]).  
-
-
-test_api(_Request) :-
-	format('Access-Control-Allow-Origin: *~nAccess-Control-Allow-Headers: *~n', []),
-	reply_json_dict(_{status:'true'}).
   
   
   
