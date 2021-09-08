@@ -22,9 +22,6 @@
 :- use_module(library(term_to_json)).
 :- use_module(library(http/http_header)).
 :- use_module(functions).
-:- use_module(db_users).
-:- use_module(user_module).
-:- use_module(admin).
 :- use_module(graph).
 
 server(Port) :-
