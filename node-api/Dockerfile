@@ -1,6 +1,6 @@
 FROM node:14
 
-WORKDIR /var/www/swi-vue/project/node-api
+WORKDIR /var/www/html/node-api
 
 COPY package*.json ./
 

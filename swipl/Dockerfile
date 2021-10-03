@@ -1,6 +1,6 @@
 FROM swipl:stable
 
-WORKDIR /var/www/swi-vue/project/swipl
+WORKDIR /var/www/html/swipl
 
 EXPOSE 8060
 

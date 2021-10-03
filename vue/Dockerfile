@@ -1,6 +1,6 @@
 FROM nginx
 
-WORKDIR /var/www/swi-vue/project/vue
+WORKDIR /var/www/html
 
 COPY package*.json ./
 

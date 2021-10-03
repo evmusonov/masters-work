@@ -16,14 +16,14 @@ const courseTestController = require('./controllers/courseTestController');
 
 
 async function start() {
-  await mongoose.connect('mongodb://mongo/intes', {
+  await mongoose.connect('mongodb://mongo/', {
     "auth": { "authSource": "admin" },
     "user": "root",
     "pass": "root",
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
+    "useNewUrlParser": true,
+    "useUnifiedTopology": true,
+//    "useFindAndModify": false,
+//    "useCreateIndex": true
   });
 }
 
