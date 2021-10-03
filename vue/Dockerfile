@@ -18,6 +18,7 @@ RUN npm --version
 
 RUN npm install
 RUN npm install -g --unsafe-perm @vue/cli
+COPY . .
 RUN npm run build
 
 EXPOSE 8080
